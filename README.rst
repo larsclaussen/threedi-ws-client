@@ -14,9 +14,24 @@ threedi-ws-client
         :alt: Documentation Status
 
 
+Create a virtual python > 3.6 environment, run
 
+`pip install -r requirements.txt`
 
-Python Boilerplate contains all the boilerplate you need to create a Python package.
+The `active_simulations` command takes a required keyword argument `--env` with
+the options
+
+- prod (production obviously)
+- stag (staging obviously)
+- local
+
+You have to create a corresponding `.env` file for the destination environment.
+The `prod.env` file could look something like this::
+
+    API_USERNAME='micheal.jackson'
+    API_PASSWORD='sefdiee92u43dmslzxsad'
+    API_HOST='https://api.3di.live/v3.0'
+
 
 
 * Free software: MIT license

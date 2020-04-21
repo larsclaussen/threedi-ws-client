@@ -6,8 +6,8 @@ import signal
 import asyncclick as click
 from threedi_api_client.threedi_api_client import ThreediApiClient
 
-from active_simulations.ws_client import WebsocketClient
-from active_simulations.settings import Settings
+from threedi_ws_client.ws_client import WebsocketClient
+from threedi_ws_client.settings import get_settings
 
 pp = pprint.PrettyPrinter(width=45, depth=1)
 
@@ -25,21 +25,24 @@ async def shutdown(signal_inst: signal):
 
 @click.command()
 @click.option(
-    "--environment",
+    "--env",
     required=True,
     type=click.Choice(["prod", "stag", "local"], case_sensitive=False),
     help="The destination environment",
 )
-async def main(environment):
-    env_file = f"{environment}.env"
-    settings = Settings(_env_file=env_file)
+async def main(env):
+    env_file = f"{env}.env"
+    proto = "ws" if env == "local" else "wss"
+    settings = get_settings(env_file)
     parsed_url = urlparse(settings.api_host)
     host_name = parsed_url.netloc
     api_version = parsed_url.path.lstrip('/')
     client = ThreediApiClient(env_file)
     websocket_client = WebsocketClient(
         client.configuration.access_token,
-        host=host_name, api_version=api_version
+        host_name=host_name,
+        api_version=api_version,
+        proto=proto
     )
     await asyncio.gather(
         websocket_client.listen(),
