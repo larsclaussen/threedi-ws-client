@@ -20,7 +20,7 @@ test_requirements = [ ]
 setup(
     author="Lars Claussen",
     author_email='claussen.lars@nelen-schuurmans.nl',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -29,13 +29,18 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Python Boilerplate contains all the boilerplate you need to create a Python package.",
+    description="websocket client for threedi websocket consumer endpoints",
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
+    entry_points={
+        'console_scripts': [
+            'active_simulations=threedi_ws_client.commands.active_simulations:main',
+        ],
+    },
     keywords='threedi_ws_client',
-    name='threedi_ws_client',
+    name='threedi-ws-client',
     packages=find_packages(include=['threedi_ws_client', 'threedi_ws_client.*']),
     setup_requires=setup_requirements,
     test_suite='tests',

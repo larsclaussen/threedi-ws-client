@@ -14,9 +14,12 @@ threedi-ws-client
         :alt: Documentation Status
 
 
-Create a virtual python > 3.6 environment, run
+Quick start
+-----------
 
-`pip install -r requirements.txt`
+Create a virtual python > 3.6 environment, run::
+
+    pip install -r requirements.txt
 
 The `active_simulations` command takes a required keyword argument `--env` with
 the options
@@ -33,6 +36,9 @@ The `prod.env` file could look something like this::
     API_HOST='https://api.3di.live/v3.0'
 
 
+To start the client run::
+
+    python threedi_ws_client/commands/active_simulations.py --env=<prod | stag | local>
 
 * Free software: MIT license
 * Documentation: https://threedi-ws-client.readthedocs.io.
