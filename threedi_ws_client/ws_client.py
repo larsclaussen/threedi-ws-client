@@ -6,8 +6,6 @@ import pprint
 
 pp = pprint.PrettyPrinter(width=45, depth=1)
 
-from .settings import get_settings
-
 
 class WebsocketClient:
     def __init__(
@@ -26,9 +24,8 @@ class WebsocketClient:
         self.bearer = bearer
         self.jwt_token = jwt_token
 
-    async def listen(self):
-        uri = f'{self.proto}://{self.host}/{self.api_version}/' +\
-              f'active-simulations/'
+    async def listen(self, endpoint: str):
+        uri = f'{self.proto}://{self.host}/{self.api_version}/{endpoint}/'
         click.secho(f"Connecting to {uri}", fg="red", bold=True)
         headers = Headers(authorization=f'{self.bearer} {self.jwt_token}')
         async with websockets.connect(uri, extra_headers=headers) as websocket:

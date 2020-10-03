@@ -1,5 +1,6 @@
 import asyncio
 from urllib.parse import urlparse
+from urllib.parse import urlencode
 import pprint
 import signal
 
@@ -30,7 +31,13 @@ async def shutdown(signal_inst: signal):
     type=click.Choice(["prod", "stag", "local"], case_sensitive=False),
     help="The destination environment",
 )
-async def main(env):
+@click.option(
+    "--cmd",
+    required=True,
+    type=click.Choice(["generate_threedi_files", "make_grid", "migrate_model_db"], case_sensitive=False),
+    help="The command you want to run",
+)
+async def main(env, cmd):
     env_file = f"{env}.env"
     proto = "ws" if env == "local" else "wss"
     settings = get_settings(env_file)
@@ -38,15 +45,32 @@ async def main(env):
     host_name = parsed_url.netloc
     api_version = parsed_url.path.lstrip('/')
     client = ThreediApiClient(env_file)
+    legacy_commands_base_kwargs = {
+        "envs": {},
+        "labels": {}
+    }
+
+    generate_files_kwargs = {
+        "command": cmd,
+        "relative_base_model_path": "YmFzZSA2NA==/c501ee4834304fce82398bc527ce758c",
+        "make_grid": False
+    }
+    generate_files_kwargs.update(legacy_commands_base_kwargs)
+    query_params_str = urlencode(generate_files_kwargs)
     websocket_client = WebsocketClient(
         client.configuration.access_token,
         host_name=host_name,
         api_version=api_version,
         proto=proto
     )
+    uid = "c501ee4834304fce82398bc527ce758c"
+    click.secho(f"===>>> legacy/c501ee4834304fce82398bc527ce758c/?{query_params_str}")
     await asyncio.gather(
-        websocket_client.listen("active-simulations"),
+        websocket_client.listen(f"legacy/{uid}/?{query_params_str}"),
     )
+    # await asyncio.gather(
+    #     websocket_client.listen(f"legacy/c501ee4834304fce82398bc527ce758c?{query_params_str}"),
+    # )
 
 
 if __name__ == '__main__':
