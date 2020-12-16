@@ -2,7 +2,6 @@ import json
 import asyncio
 import websockets
 from websockets.http import Headers
-import asyncclick as click
 import pprint
 
 from .console import console
