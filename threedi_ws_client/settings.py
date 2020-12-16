@@ -33,5 +33,5 @@ def get_settings(env_file):
         host_name=host_name,
         api_version=api_version,
         client=client,
-        token=client.configuration.access_token
+        token=client.configuration.get_api_key_with_prefix("Authorization")
     )

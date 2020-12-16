@@ -38,7 +38,7 @@ class WebsocketClient(object):
     async def listen(self, endpoint_uri: str):
         uri = f"{self.proto}://{self.host}/{self.api_version}/{endpoint_uri}"
         console.print(f"Trying to connect to {uri} now...")
-        headers = Headers(authorization=f"Bearer {self.token}")
+        headers = Headers(authorization=f"{self.token}")
         headers.update(**self.user_agent)
         sim_time: Optional[int] = None
         async with websockets.connect(uri, extra_headers=headers) as websocket:

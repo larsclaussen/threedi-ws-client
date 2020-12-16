@@ -59,7 +59,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'active_simulations=threedi_ws_client.commands.active_simulations:main',
+            'active_simulations=threedi_ws_client.commands.active_simulations:run',
         ],
     },
     keywords='threedi_ws_client',
