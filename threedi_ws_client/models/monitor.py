@@ -176,10 +176,7 @@ class ActiveSimulations:
         progress_task = self.tasks.get(int(simulation_id))
         if self.is_live_finished(status, progress_task):
             status = "finished"
-        if status == "finished":
-            status_txt = f"{status} [{progress_task.task.elapsed} secs]"
-        else:
-            status_txt = status
+        status_txt = status
         color = self.STATUS_COLORS.get(status)
         if color:
             status_txt = f"[bold {color}]{status_txt}[/bold {color}]"
