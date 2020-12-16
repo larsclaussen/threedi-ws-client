@@ -40,7 +40,6 @@ class WebsocketClient(object):
         console.print(f"Trying to connect to {uri} now...")
         headers = Headers(authorization=f"Bearer {self.token}")
         headers.update(**self.user_agent)
-        console.print(headers)
         sim_time: Optional[int] = None
         async with websockets.connect(uri, extra_headers=headers) as websocket:
             console.print(f"Connected to {uri}")
