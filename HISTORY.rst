@@ -2,7 +2,7 @@
 History
 =======
 
-0.0.2 (unreleased)
+0.0.2 (2020-12-16)
 ------------------
 
 - Create PyPi project first.
