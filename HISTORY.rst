@@ -5,7 +5,7 @@ History
 0.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove asyncclick import.
 
 
 0.0.3 (2020-12-16)
