@@ -24,6 +24,8 @@ from ..settings import get_settings
 from ..ws_client import WebsocketClient
 from ..console import console
 
+MAX_LEN_NAME = 30
+
 
 class StatusColors:
     starting = "gold3"
@@ -241,11 +243,15 @@ class ActiveSimulations:
     async def _get_progress_task(simulation_id, simulation_details) -> ProgressTask:
 
         details = json.loads(simulation_details)
-        name = details["name"]
+        if len(details["name"]) > MAX_LEN_NAME:
+            name = f"{details['name'][:MAX_LEN_NAME]}...| "
+        else:
+            name = details['name']
+
         is_live = int(details["duration"]) == 3153600000
         if is_live:
             dt = parser.parse(details["date_created"])
-            name = f"{name} [bold red][LIVE][/bold red]"  # since {dt.strftime('%Y-%m-%d %H:%M')}]"
+            name = f"{name}{dt.strftime('%Y-%m-%d %H:%M')} [bold red][LIVE][/bold red]"
         sim_progress = details["progress"]
         return ProgressTask(
             sim_id=simulation_id,

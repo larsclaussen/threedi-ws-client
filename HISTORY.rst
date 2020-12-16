@@ -5,7 +5,7 @@ History
 0.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Limit name length to 30 chars.  
 
 
 0.0.4 (2020-12-16)
