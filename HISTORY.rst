@@ -5,7 +5,7 @@ History
 0.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Use click directly.
 
 
 0.0.2 (2020-12-16)

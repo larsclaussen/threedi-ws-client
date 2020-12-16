@@ -1,9 +1,8 @@
 import asyncio
 from urllib.parse import urlparse
-import pprint
 import signal
 
-import asyncclick as click
+import click
 from threedi_api_client.threedi_api_client import ThreediApiClient
 
 from threedi_ws_client.ws_client import WebsocketClient
