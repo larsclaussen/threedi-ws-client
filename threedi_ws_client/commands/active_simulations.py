@@ -8,6 +8,7 @@ from threedi_api_client.threedi_api_client import ThreediApiClient
 
 from threedi_ws_client.ws_client import WebsocketClient
 from threedi_ws_client.settings import get_settings
+from threedi_ws_client.models.monitor import ActiveSimulations
 
 pp = pprint.PrettyPrinter(width=45, depth=1)
 
@@ -32,20 +33,9 @@ async def shutdown(signal_inst: signal):
 )
 async def main(env):
     env_file = f"{env}.env"
-    proto = "ws" if env == "local" else "wss"
-    settings = get_settings(env_file)
-    parsed_url = urlparse(settings.api_host)
-    host_name = parsed_url.netloc
-    api_version = parsed_url.path.lstrip('/')
-    client = ThreediApiClient(env_file)
-    websocket_client = WebsocketClient(
-        client.configuration.access_token,
-        host_name=host_name,
-        api_version=api_version,
-        proto=proto
-    )
+    active_sims = ActiveSimulations(env_file)
     await asyncio.gather(
-        websocket_client.listen(),
+        active_sims.run_monitor(),
     )
 
 

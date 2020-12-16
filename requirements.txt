@@ -3,3 +3,4 @@ pydantic[dotenv]==1.4
 threedi-api-client==3.0b16
 urllib3==1.25.8
 websockets==8.1
+rich==9.4.0

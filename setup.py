@@ -4,23 +4,46 @@
 """The setup script."""
 
 from setuptools import setup, find_packages
+import codecs
+import os
+import re
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+def read(*parts):
+    with codecs.open(os.path.join(here, *parts), 'r') as fp:
+        return fp.read()
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
+
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+with open('requirements.txt') as req_file:
+    requirements = req_file.read().splitlines()
 
-setup_requirements = [ ]
+with open('requirements_dev.txt') as dev_req_file:
+    setup_requirements = dev_req_file.read().splitlines()
 
-test_requirements = [ ]
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
+test_requirements = []
 
 setup(
     author="Lars Claussen",
     author_email='claussen.lars@nelen-schuurmans.nl',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*',
+    python_requires='>=3.7',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
@@ -46,6 +69,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/larsclaussen/threedi-ws-client',
-    version='0.1.0',
+    version=find_version('threedi_ws_client', 'version.py'),
     zip_safe=False,
 )
